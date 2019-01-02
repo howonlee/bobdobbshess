@@ -13,13 +13,13 @@ I'm not saying that machine learning is the portal to a demon universe, I'm just
 \end{quote}
 
 \section{Abstract}
-You care about multiplication of the inverse Hessian with a vector because Newton's method for optimization demands it. In many applications, inverse Hessian multiplication is not possible because of time and space constraints. A method linear to the size of the gradient function in both time and space is given which is very close to the Hessian-vector multiplication of \cite{pearlmutter1993}, with differential operator and all. However, I have failed to get it working on neural nets for a reason also given. I also have some strange speculative statements.
+You care about multiplication of the inverse Hessian with a vector because Newton's method for optimization demands it. In many applications, inverse Hessian multiplication is not possible because of time and space constraints. A method linear to the size of the gradient function in both time and space is given which is very close to the Hessian-vector multiplication of \cite{pearlmutter1994}, with differential operator and all. However, I have failed to get it working on neural nets for a reason also given. I also have some strange speculative statements.
 
 \section{Introduction}
 
 The Hessian is the matrix of second derivatives of a function. In Newton's method for optimizations, it is the second derivative with respect to an optimization target. But Newton's method requires the inverse of the Hessian (in one dimension, it requires the inverse of the second derivative). This led to Newton's method being computationally infeasible for most optimizational regimes where the dimensionality is high, because if the dimension of the system is $n$, the naive inversion of the Newton's method takes $O(n^2)$ space and $O(n^3)$ time.
 
-There is a shortcut which exists which is usually more used in neural networks. In neural networks it was introduced by \cite{pearlmutter1993}. This consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done. In the following, an inverse Hessian-vector multiplication is shown.
+There is a shortcut which exists which is usually more used in neural networks. In neural networks it was introduced by \cite{pearlmutter1994}. This consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done. In the following, an inverse Hessian-vector multiplication is shown.
 
 \section{J. R. "Bob" Dobbs Method}
 
@@ -29,17 +29,17 @@ Recall the Hessian is a Jacobian, and it is found in the Taylor expansion of the
 
 The inverse function theorem \cite{lang1995} gives a formula for the matrix inverse of a Jacobian, with conditions (Jacobian determinant must be nonzero). That is, the Jacobian of the (functional) inverse of a function is the multiplicative inverse of the Jacobian of the original function.
 
-Hessian is Jacobian of the gradient:
+The Hessian is the Jacobian of the gradient:
 
 $$H(f(x)) = J(\nabla f(x))^T $$
 
-So, the inverse Hessian is Jacobian of the functional inverse of the gradient:
+So, the inverse Hessian is the Jacobian of the functional inverse of the gradient:
 
 $$H^{-1}(f(x)) = J(\nabla^{-1} f(x))^T $$
 
 \subsection{Inverse Hessian is found in the Taylor Expansion of $\nabla_w^{-1}$}
 
-Pearlmutter's 1993 method for Hessian-vector multiplication begins from the Taylor expansion of the gradient about a point:
+The method of \cite{pearlmutter1994} for Hessian-vector multiplication begins from the Taylor expansion of the gradient about a point:
 
 %%% expansion
 
@@ -47,7 +47,7 @@ But, given our definition of $H^{-1}$ above, we will actually find $H^{-1}$ abou
 
 %%% expansion
 
-After finding this, the entire rest of the procedure goes analogously to Pearlmutter 1993.
+After finding this, the entire rest of the procedure goes analogously to \cite{pearlmutter1994}. Note the different semantics of the differential operator, though.
 
 %%%% rest of procedure
 
@@ -61,6 +61,8 @@ Of course, that one was trivial anyhow.
 
 $$ f_2(x_i)_i = some stuff $$
 
+%%%%%
+
 So you can see here that the difficult part is finding a functional inverse for the gradient.
 
 \section{Neural Net}
@@ -69,7 +71,7 @@ Of particular interest in application of Newton's method to high dimensional sys
 
 With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the dependencies of the original Pearlmutter application of the operator, initial results require further results in the inverse regime. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron.
 
-You might think that you might use the $R_v$ on the original gradient functions. However, the $v$'s seem to me to be different. Often the Jacobian determinant is zero, but you can avoid this by construction (pick another random initialization). I assume you are completely familiar with neural nets already\cite{werbos1974}.
+You might think that you might use the $R_v$ on the original gradient functions. However, the $v$'s seem to me to be different. Often the Jacobian determinant is zero, but you can avoid this by construction (pick another random initialization). I assume you are completely familiar with neural nets already\cite{deeplearning}.
 
 %%%%% document failure
 
@@ -89,13 +91,11 @@ You might, of course, just care about second-order methods for completely normal
 
 \begin{thebibliography}{9}
 \bibitem{lang1995}
-Lang 1995 Differential and Riemannian Manifolds
-\bibitem{pearlmutter1993}
-Pearlmutter 1993
-\bibitem{werbos1974}
-Werbos 1974
+Lang, S. (1995). Differential and Riemannian manifolds, Vol. 160 of. Graduate Texts in Mathematics, 185.
+\bibitem{pearlmutter1994}
+Pearlmutter, B. A. (1994). Fast exact multiplication by the Hessian. Neural computation, 6(1), 147-160.
+\bibitem{deeplearning}
+Goodfellow, I., Bengio, Y., Courville, A., \& Bengio, Y. (2016). Deep learning (Vol. 1). Cambridge: MIT press.
 \end{thebibliography}
-
-%%%%% citations
 
 \end{document}
