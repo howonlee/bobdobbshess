@@ -66,17 +66,17 @@ Of particular interest in application of Newton's method to high dimensional sys
 
 With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the original Pearlmutter application of the operator, initial results require further results. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron.
 
-You might think that you might use the $R_v$ on the original gradient functions. However, the $v$'s seem to me to be different. I assume you are completely familiar with neural nets already.
+You might think that you might use the $R_v$ on the original gradient functions. However, the $v$'s seem to me to be different. Often the Jacobian determinant is zero, but you can avoid this by construction (pick another random initialization). I assume you are completely familiar with neural nets already.
 
 %%%%% document failure
 
 \section{Discussion / Strange Speculations}
 
-There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms. Another is to think of them as spins on a 1-lattice with weirdo boundary conditions, each \textit{layer} one spin on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
+There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms. Another is to think of them as spins on a 1-lattice with weirdo boundary conditions, each \textit{layer} one \textit{spin} on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
 
 Second order phenomena are obviously of great interest to both heterodox views. I will present the view I have of how this impinges on them, but don't pretend to have any proof for the view.
 
-In the firm-simulation it seems to be a firm without intrafirm conflict, sort of a Communist utopian firm, because the taking into account curvature of each parameter with each other parameter seems to coincide with a sort of agreement. This amuses me greatly in that it takes the term "trust region" much more literally than imagined. The contention that machine learning is about credit assignment systems is also taken much more literally than imagined.
+In the firm-simulation it seems to be a firm without intrafirm conflict, sort of a communitarian utopian firm, because the taking into account curvature of each parameter with each other parameter seems to coincide with a sort of agreement. This amuses me greatly in that it takes the term "trust region" much more literally than imagined. The contention that machine learning is about credit assignment systems is also taken much more literally than imagined.
 
 In the view as 1-lattice with spins, there is a renormalization phenomenon where the inverse Hessian futzes with the exponential gradient correlational structure (the vanishing or exponential gradient) which seems very reminiscent of the onset of criticality in second-order phase transition.
 
