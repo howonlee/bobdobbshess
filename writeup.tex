@@ -13,7 +13,7 @@ I'm not saying that machine learning is the portal to a demon universe, I'm just
 \end{quote}
 
 \section{Abstract}
-You care about multiplication of the inverse Hessian with a vector because Newton's method for optimization demands it. In many applications, inverse Hessian multiplication is not possible because of time and space constraints. A method linear to the size of the gradient function in both time and space is given which is very close to the Hessian-vector multiplication of Pearlmutter (1993), with differential operator and all. However, I have failed to get it working on neural nets for some reasons also given. I also have some speculations on what second order methods mean to the enterprise of machine learning, pilfered from physics and economics.
+You care about multiplication of the inverse Hessian with a vector because Newton's method for optimization demands it. In many applications, inverse Hessian multiplication is not possible because of time and space constraints. A method linear to the size of the gradient function in both time and space is given which is very close to the Hessian-vector multiplication of Pearlmutter (1993), with differential operator and all. However, I have failed to get it working on neural nets for a reason also given. I also have some speculations on what second order methods mean to the enterprise of machine learning, pilfered from physics and economics.
 
 \section{Introduction}
 
@@ -58,19 +58,33 @@ $$ f_1(x_i)_i = x_i^3 $$
 %%%%%
 
 $$ f_2(x_i)_i = (x -y) ^ 2 $$
-%%%%%
+%%%%% linear op, actually
 
 \section{Neural Net}
+
+Of particular interest in application of Newton's method to high dimensional systems is in neural networks. I have made several attempts to attack them with this method but it is surprisingly difficult to get the functional inverse of a neural network gradient with respect to the weights which is compatible with the differential operator.
+
+With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the original Pearlmutter application of the operator, initial results require further results. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron.
+
+You might think that you might use the $R_v$ on the original gradient functions. However, the $v$'s seem to me to be different. I assume you are completely familiar with neural nets already.
 
 %%%%% document failure
 
 \section{Discussion}
 
 %%%% discuss
+
+%%% There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own lying around on a back burner somewhere. An important one to me is to think of them as sort of simulations of firms. Another is to think of them as spins on a 1-lattice with weirdo boundary conditions, each layer one spin on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
+
+%% Second order phenomena are obviously of great interest to both heterodox views. In the firm-simulation it seems to be a firm without intrafirm conflict, sort of a Communist utopian firm, because the taking into account curvature of each parameter with each other parameter seems to coincide with a sort of agreement. This amuses me greatly in that it takes the term "trust region" much more literally than imagined (the contention that machine learning is about credit assignment systems is also taken much more literally than imagined). In the view as 1-lattice with spins, there is a renormalization phenomenon futzing with the exponential correlational structure (the vanishing or exponential gradient) which seems very reminiscent of the onset of criticality in second-order phase transition. But it also seems to me that you need real second-order methods, not Krylov methods, for that renormalization to occur.
+
+%% You might also just care about second-order methods for completely normal optimizational reasons.
+
 \section{Citations}
 
 Lang 1995 Differential and Riemannian Manifolds
 Pearlmutter 1993
+Werbos 1974
 
 %%%%% citations
 
