@@ -25,7 +25,7 @@ def hess_inv_mult1(inp):
     pass
 
 """
-fn 2: linear op with sum of squared error
+fn 2: less contrived weird dealio
 """
 
 if __name__ == "__main__":
