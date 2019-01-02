@@ -17,13 +17,21 @@ You care about multiplication of the inverse Hessian with a vector because Newto
 
 \section{Introduction}
 
-%%% newton's method goes like this. But the naive way to do inverse Hessian vector multiplication takes O(whatever) space and time. So many machine learning methods are not feasible.
+The Hessian is the matrix of second derivatives of a function. In Newton's method for optimizations, it is the second derivative with respect to an optimization target. But Newton's method requires the inverse of the Hessian (in one dimension, it requires the inverse of the second derivative). This led to Newton's method being computationally infeasible for most optimizational regimes where the dimensionality is high, because if the dimension of the system is $n$, the naive inversion of the Newton's method takes $O(n^2)$ space and $O(n^3)$ time.
+
+There is a shortcut which exists which is usually more used in neural networks. In neural networks it was introduced by Pearlmutter 1993. This consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done. In the following, an inverse Hessian-vector multiplication is shown.
 
 \section{J. R. "Bob" Dobbs Method}
 
-%%% is perturbational method.
-%%% describe what perturbation is.
-%%% note we have sameish differential operator.
+Recall the Hessian is a Jacobian, and it is found in the Taylor expansion of the gradient of a function about a point. The crux of the J. R. "Bob" Dobbs method is to realize that the inverse Hessian is itself a Jacobian and it is found in the Taylor expansion of the functional inverse of the gradient of a function about a point.
+
+\subsection{Inverse Hessian is a Jacobian}
+
+%%%%% deal with it
+
+\subsection{Inverse Hessian is found in the Taylor Expansion of $\del_w^{-1}$}
+
+%%% describe what specific perturbation is.
 
 \section{Examples}
 
