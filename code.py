@@ -3,7 +3,7 @@ import numpy.random as npr
 import numpy.linalg as npl
 
 """
-fn 1: vector elementwise square
+fn 1: vector elementwise cube
 """
 
 def fn1(inp):
@@ -25,7 +25,7 @@ def hess_inv_mult1(inp):
     pass
 
 """
-fn 2: something very mildly more complicated
+fn 2: linear op with sum of squared error
 """
 
 if __name__ == "__main__":

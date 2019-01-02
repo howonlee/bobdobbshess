@@ -27,15 +27,38 @@ Recall the Hessian is a Jacobian, and it is found in the Taylor expansion of the
 
 \subsection{Inverse Hessian is a Jacobian}
 
-%%%%% deal with it
+The inverse function theorem (Lang 1995) gives a formula for the matrix inverse of a Jacobian, with conditions (Jacobian determinant must be nonzero). That is, the Jacobian of the (functional) inverse of a function is the multiplicative inverse of the Jacobian of the original function.
+
+Hessian is Jacobian of the gradient:
+
+$$H(f(x)) = J(\nabla f(x))^T $$
+
+So, the inverse Hessian is Jacobian of the functional inverse of the gradient:
+
+$$H^{-1}(f(x)) = J(\nabla^{-1} f(x))^T $$
 
 \subsection{Inverse Hessian is found in the Taylor Expansion of $\nabla_w^{-1}$}
 
-%%% describe what specific perturbation is.
+Pearlmutter's 1993 method for Hessian-vector multiplication begins from the Taylor expansion of the gradient about a point:
+
+%%% expansion
+
+But, given our definition of $H^{-1}$ above, we will actually find $H^{-1}$ about the expansion of the functional inverse of the gradient about a point.
+
+%%% expansion
+
+After finding this, the entire rest of the procedure goes analogously to Pearlmutter 1993.
+
+%%%% rest of procedure
 
 \section{Examples}
 
-%%%% go through the two given examples
+$$ f_1(x_i)_i = x_i^3 $$
+
+%%%%%
+
+$$ f_2(x_i)_i = (x -y) ^ 2 $$
+%%%%%
 
 \section{Neural Net}
 
@@ -45,6 +68,9 @@ Recall the Hessian is a Jacobian, and it is found in the Taylor expansion of the
 
 %%%% discuss
 \section{Citations}
+
+Lang 1995 Differential and Riemannian Manifolds
+Pearlmutter 1993
 
 %%%%% citations
 
