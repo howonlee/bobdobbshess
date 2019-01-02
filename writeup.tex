@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+\begin{document}
+\title{J. R. "Bob" Dobbs Memorial Inverse Hessian-Vector Multiplication Method}
+\author{Howon Lee}
+\date{2019 January}
+\maketitle
+
+\begin{quote}
+I'm not saying that machine learning is the portal to a demon universe, I'm just saying that some doors are best left unopened. - James Mickens
+\end{quote}
+
+\section{Abstract}
+You care about multiplication of the inverse Hessian with a vector because Newton's method for optimization demands it. In many applications, inverse Hessian multiplication is not possible because of time and space constraints. A method linear to the size of the gradient function in both time and space is given which is very close to the Hessian-vector multiplication of Pearlmutter (1993), with differential operator and all. However, I have failed to get it working on neural nets for some reasons also given. I also have some speculations on what second order methods mean to the enterprise of machine learning, pilfered from physics and economics.
+
+\section{Introduction}
+
+%%% newton's method goes like this. But the naive way to do inverse Hessian vector multiplication takes O(whatever) space and time. So many machine learning methods are not feasible.
+
+\section{J. R. "Bob" Dobbs Method}
+
+%%% is perturbational method.
+%%% describe what perturbation is.
+%%% note we have sameish differential operator.
+
+\section{Examples}
+
+%%%% go through the two given examples
+
+\section{Neural Net}
+
+%%%%% document failure
+
+\section{Discussion}
+
+%%%% discuss
+\section{Citations}
+
+%%%%% citations
+
+\end{document}
