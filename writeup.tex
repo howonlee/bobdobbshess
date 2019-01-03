@@ -19,7 +19,7 @@ You care about multiplication of the inverse Hessian with a vector because Newto
 
 The Hessian is the matrix of second derivatives of a function. In Newton's method for optimizations, it is the second derivative with respect to an optimization target. But Newton's method requires the inverse of the Hessian (in one dimension, it requires the inverse of the second derivative). This led to Newton's method being computationally infeasible for most optimizational regimes where the dimensionality is high, because if the dimension of the system is $n$, the naive inversion of the Newton's method takes $O(n^2)$ space and $O(n^3)$ time.
 
-There is a shortcut which already exists which is usually more used in neural networks. In neural networks it was introduced by \cite{pearlmutter1994}. This consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done. In the following, an inverse Hessian-vector multiplication is shown.
+There is a shortcut which already exists which is usually more used in neural networks. In neural networks it was introduced by \cite{pearlmutter1994}. It consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done\cite{martens2010}. In the following, an inverse Hessian-vector multiplication is shown.
 
 \section{J. R. "Bob" Dobbs Method}
 
@@ -27,7 +27,7 @@ Recall the Hessian is a Jacobian, and it is found in the Taylor expansion of the
 
 \subsection{Inverse Hessian is a Jacobian}
 
-The inverse function theorem \cite{lang1995} gives a formula for the matrix inverse of a Jacobian, with conditions (Jacobian determinant must be nonzero). That is, the Jacobian of the (functional) inverse of a function is the multiplicative inverse of the Jacobian of the original function.
+The inverse function theorem \cite{lang1995} gives a formula for the matrix inverse of a Jacobian, with conditions (Jacobian determinant must be nonzero). That is, the Jacobian of the (functional) inverse of a function is the multiplicative inverse of the Jacobian of the original function. There is no guarantee for the whole domain.
 
 The Hessian is the Jacobian of the gradient:
 
@@ -43,6 +43,8 @@ The method of \cite{pearlmutter1994} for Hessian-vector multiplication begins fr
 
 $$\nabla_w (w + \Delta w) = \nabla_w (w) + H\Delta w + O(||\Delta w||^2)$$
 
+Where the $H$ appears because the Hessian is the Jacobian of the gradient, assuming Schwartz symmetry of second derivatives.
+
 Take $rv = \Delta w$ and isolate the Hessian:
 
 $$H(rv) = rHv = \nabla_w(w + rv) - \nabla_w(w) + O(r^2)$$
@@ -53,7 +55,7 @@ Take limit as $r \rightarrow 0$:
 
 $$Hv = \frac{\partial}{\partial r} \nabla_w (w + rv) |_{r=0}$$
 
-Pearlmutter calculates that by defining a differential operator $R$ such that:
+Pearlmutter calculates that by defining a differential operator $R$ (the G\^{a}teaux derivative\cite{gateaux1913}) such that:
 
 $$R(f(w)) = \frac{\partial}{\partial r} f(w + rv)|_{r=0}$$
 
@@ -71,7 +73,7 @@ $$H^{-1}v = \frac{\nabla_w^{-1}(\nabla w + rv) - \nabla_w^{-1}(\nabla w)}{r} + O
 
 $$H^{-1}v = \frac{\partial}{\partial r} \nabla_w^{-1} (\nabla w + rv) |_{r=0}$$
 
-And diffferential operator, denoted $B$ because of the different semantics, is as such
+And the diffferential operator, denoted $B$ because of the different semantics, is as such
 
 $$B(f(\nabla w)) = \frac{\partial}{\partial r} f(\nabla w + rv)|_{r=0}$$
 
@@ -82,12 +84,18 @@ $$ \nabla f_1(x_i)_i = 3 x_i^2 $$
 $$ \nabla^{-1} f_1(\nabla f_i)_i = \sqrt{\frac{\nabla f_i}{3}} $$
 
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
 
 Of course, that one was trivial anyhow.
 
 $$ f_2(x_i)_i = some stuff $$
 
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
 
 So you can see here that the difficult part is finding a functional inverse for the gradient.
 
@@ -95,15 +103,22 @@ So you can see here that the difficult part is finding a functional inverse for 
 
 Of particular interest in application of Newton's method to high dimensional systems is in neural networks. I have made several attempts to attack them with this method but it is surprisingly difficult to get the functional inverse of a neural network gradient with respect to the weights which is compatible with the differential operator.
 
-With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the dependencies of the original Pearlmutter application of the operator, initial results require further results in the inverse regime. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron.
+With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the dependencies of the original Pearlmutter application of the operator, initial results require further results in the inverse regime. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron. (You can also use the approximation which doesn't take the limit of $r$ pretty easily, but that one has numerical problems.)
+
+G\^{a}teaux derivative is a generalization of the functional derivative, but I haven't gotten anywhere by using the functional derivative, although it seems tempting.
 
 You might think that you might use the $R_v$ on the original gradient functions. However, the $v$'s seem to me to be different. Often the Jacobian determinant is zero, but you can avoid this by construction (pick another random initialization). I assume you are completely familiar with neural nets already\cite{deeplearning}.
 
 %%%%% document failure
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Discussion / Strange Speculative Statements}
 
-There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms. Another is to think of them as spins on a 1-lattice with weirdo boundary conditions, each \textit{layer} one \textit{spin} on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
+There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms. Another is to think of them as spins on a 1-lattice with weirdo boundathe ry conditions, each \textit{layer} one \textit{spin} on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
 
 Second order phenomena are obviously of great interest to both heterodox views. I will present the view I have of how this impinges on them, but don't pretend to have any proof for the view.
 
@@ -122,6 +137,10 @@ Lang, S. (1995). Differential and Riemannian manifolds, Vol. 160 of. Graduate Te
 Pearlmutter, B. A. (1994). Fast exact multiplication by the Hessian. Neural computation, 6(1), 147-160.
 \bibitem{deeplearning}
 Goodfellow, I., Bengio, Y., Courville, A., \& Bengio, Y. (2016). Deep learning (Vol. 1). Cambridge: MIT press.
+\bibitem{martens2010}
+Martens, J. (2010, June). Deep learning via Hessian-free optimization. In ICML (Vol. 27, pp. 735-742).
+\bibitem{gateaux1913}
+G\^{a}teaux, R. (1913). Sur les fonctionnelles continues et les fonctionnelles analytiques. CR Acad. Sci. Paris, 157(325-327), 65.
 \end{thebibliography}
 
 \end{document}
