@@ -19,7 +19,7 @@ You care about multiplication of the inverse Hessian with a vector because Newto
 
 The Hessian is the matrix of second derivatives of a function. In Newton's method for optimizations, it is the second derivative with respect to an optimization target. But Newton's method requires the inverse of the Hessian (in one dimension, it requires the inverse of the second derivative). This led to Newton's method being computationally infeasible for most optimizational regimes where the dimensionality is high, because if the dimension of the system is $n$, the naive inversion of the Newton's method takes $O(n^2)$ space and $O(n^3)$ time.
 
-There is a shortcut which exists which is usually more used in neural networks. In neural networks it was introduced by \cite{pearlmutter1994}. This consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done. In the following, an inverse Hessian-vector multiplication is shown.
+There is a shortcut which already exists which is usually more used in neural networks. In neural networks it was introduced by \cite{pearlmutter1994}. This consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done. In the following, an inverse Hessian-vector multiplication is shown.
 
 \section{J. R. "Bob" Dobbs Method}
 
@@ -41,19 +41,45 @@ $$H^{-1}(f(x)) = J(\nabla^{-1} f(x))^T $$
 
 The method of \cite{pearlmutter1994} for Hessian-vector multiplication begins from the Taylor expansion of the gradient about a point:
 
-%%% expansion
+$$\nabla_w (w + \Delta w) = \nabla_w (w) + H\Delta w + O(||\Delta w||^2)$$
 
-But, given our definition of $H^{-1}$ above, we will actually find $H^{-1}$ about the expansion of the functional inverse of the gradient about a point.
+Take $rv = \Delta w$ and isolate the Hessian:
 
-%%% expansion
+$$H(rv) = rHv = \nabla_w(w + rv) - \nabla_w(w) + O(r^2)$$
 
-After finding this, the entire rest of the procedure goes analogously to \cite{pearlmutter1994}. Note the different semantics of the differential operator, though.
+$$Hv = \frac{\nabla_w(w + rv) - \nabla_w(w)}{r} + O(r)$$
 
-%%%% rest of procedure
+Take limit as $r \rightarrow 0$:
+
+$$Hv = \frac{\partial}{\partial r} \nabla_w (w + rv) |_{r=0}$$
+
+Pearlmutter calculates that by defining a differential operator $R$ such that:
+
+$$R(f(w)) = \frac{\partial}{\partial r} f(w + rv)|_{r=0}$$
+
+and mechanically going through the equations for calculating $\nabla_w$ step by step, so that the $R(\delta)$ get cached there, too.
+
+But, given our definition of $H^{-1}$ above, we will actually find $H^{-1}$ about the expansion of the functional inverse of the gradient about a point. Not the integral of the Green's function (at least not directly), not the multiplicative inverse of the gradient (unless the multiplicative inverse corresponds with the functional inverse), the functional inverse.
+
+$$\nabla_w^{-1} (\nabla_w + \Delta w) = \nabla_w^{-1} (\nabla_w) + H^{-1} \Delta w + O(||\Delta w||^2)$$
+
+After finding this, the entire rest of the procedure goes analogously to \cite{pearlmutter1994}.
+
+$$H^{-1}(rv) = rH^{-1}v = \nabla_w^{-1}(\nabla w + rv) - \nabla_w^{-1}(\nabla w) + O(r^2)$$
+
+$$H^{-1}v = \frac{\nabla_w^{-1}(\nabla w + rv) - \nabla_w^{-1}(\nabla w)}{r} + O(r)$$
+
+$$H^{-1}v = \frac{\partial}{\partial r} \nabla_w^{-1} (\nabla w + rv) |_{r=0}$$
+
+And diffferential operator, denoted $B$ because of the different semantics, is as such
+
+$$B(f(\nabla w)) = \frac{\partial}{\partial r} f(\nabla w + rv)|_{r=0}$$
 
 \section{Examples}
 
 $$ f_1(x_i)_i = x_i^3 $$
+$$ \nabla f_1(x_i)_i = 3 x_i^2 $$
+$$ \nabla^{-1} f_1(\nabla f_i)_i = \sqrt{\frac{\nabla f_i}{3}} $$
 
 %%%%%
 
