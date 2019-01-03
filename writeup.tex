@@ -109,12 +109,37 @@ The G\^{a}teaux derivative is a formalization of the functional derivative, but 
 
 You might think that you might use the $R_v$ on the original gradient functions. However, the $v$'s seem to me to be different. Often the Jacobian determinant is zero, but you can avoid this by construction (pick another random initialization). I assume you are completely familiar with neural nets already\cite{deeplearning}.
 
-%%%%% document failure
-%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%
+Specific example is with sum of squared error and no softmax.
+
+Forward steps:
+
+$$ net_1 = xW_1 $$
+$$ h_1 = act(net_1) $$
+$$ net_2 = h_1W_2 $$
+$$ h_2 = act(net_2) $$
+$$ J = err(h_2, y) $$
+
+Backward steps:
+
+$$ \frac{\partial J}{\partial h_2} = h_2 - y $$
+%%%%%%%%%%%%
+%%%%%%%%%%%%
+%%%%%%%%%%%%
+%%%%%%%%%%%%
+
+For reference, here is also listed $Hv$:
+
+%%%% forward Hv
+%%%% backward Hv
+
+The functional inverse of the gradient:
+%%% backward to error
+%%% error to forwards
+
+Finally, $H^{-1}v$:
+
+%%%% backward H^{-1}v
+%%%% forward H^{-1}v
 
 \section{Discussion / Strange Speculative Statements}
 
