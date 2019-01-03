@@ -17,7 +17,7 @@ You care about multiplication of the inverse Hessian with a vector because Newto
 
 \section{Introduction}
 
-The Hessian is the matrix of second derivatives of a function. In Newton's method for optimizations, it is the second derivative with respect to an optimization target. But Newton's method requires the inverse of the Hessian (in one dimension, it requires the inverse of the second derivative). This led to Newton's method being computationally infeasible for most optimizational regimes where the dimensionality is high, because if the dimension of the system is $n$, the naive inversion of the Newton's method takes $O(n^2)$ space and $O(n^3)$ time.
+The Hessian is the matrix of second derivatives of a function. In Newton's method for optimizations, it is the second derivative with respect to an optimization target. But Newton's method requires the multiplicative inverse of the Hessian (in one dimension, it requires the multiplicative inverse of the second derivative). This led to Newton's method being computationally infeasible for most optimizational regimes where the dimensionality is high, because if the dimension of the system is $n$, the naive inversion of the Newton's method takes $O(n^2)$ space and $O(n^3)$ time.
 
 There is a shortcut which already exists which is usually more used in neural networks. In neural networks it was introduced by \cite{pearlmutter1994}. It consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done\cite{martens2010}. In the following, an inverse Hessian-vector multiplication is shown.
 
@@ -105,7 +105,7 @@ Of particular interest in application of Newton's method to high dimensional sys
 
 With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the dependencies of the original Pearlmutter application of the operator, initial results require further results in the inverse regime. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron. (You can also use the approximation which doesn't take the limit of $r$ pretty easily, but that one has numerical problems.)
 
-G\^{a}teaux derivative is a generalization of the functional derivative, but I haven't gotten anywhere by using the functional derivative, although it seems tempting.
+The G\^{a}teaux derivative is a formalization of the functional derivative, but I haven't gotten anywhere by using the functional derivative, although it seems tempting.
 
 You might think that you might use the $R_v$ on the original gradient functions. However, the $v$'s seem to me to be different. Often the Jacobian determinant is zero, but you can avoid this by construction (pick another random initialization). I assume you are completely familiar with neural nets already\cite{deeplearning}.
 
@@ -118,7 +118,7 @@ You might think that you might use the $R_v$ on the original gradient functions.
 
 \section{Discussion / Strange Speculative Statements}
 
-There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms. Another is to think of them as spins on a 1-lattice with weirdo boundathe ry conditions, each \textit{layer} one \textit{spin} on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
+There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms. Another is to think of them as spins on a 1-lattice with weirdo boundary conditions, each \textit{layer} one \textit{spin} on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
 
 Second order phenomena are obviously of great interest to both heterodox views. I will present the view I have of how this impinges on them, but don't pretend to have any proof for the view.
 
