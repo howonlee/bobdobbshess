@@ -33,7 +33,7 @@ The Hessian is the Jacobian of the gradient:
 
 $$H(f(x)) = J(\nabla f(x))^T $$
 
-So, the inverse Hessian is the Jacobian of the functional inverse of the gradient:
+So, the multiplicative inverse of the Hessian is the Jacobian of the functional inverse of the gradient:
 
 $$H^{-1}(f(x)) = J(\nabla^{-1} f(x))^T $$
 
@@ -135,10 +135,8 @@ $$ (H^{-1}v)_1 = (\frac{(z_2 + rv_2)(z_3 +rv_3)}{(z_1 + rv_1)})^{-\frac{1}{2}} \
 $$ (H^{-1}v)_1 = (\frac{(z_2)(z_3)}{(z_1)})^{-\frac{1}{2}} \frac{(v_2z_3 + v_3z_2)(z_1) - v_1z_2z_3}{z_1^2}$$
 $$ (H^{-1}v)_2 = (\frac{(z_1)(z_3)}{(z_2)})^{-\frac{1}{2}} \frac{(v_1z_3 + v_3z_1)(z_2) - v_2z_1z_3}{z_2^2}$$
 $$ (H^{-1}v)_3 = (\frac{(z_1)(z_2)}{(z_3)})^{-\frac{1}{2}} \frac{(v_1z_2 + v_2z_1)(z_3) - v_3z_1z_2}{z_3^2}$$
-%%%%% inverse Hessian vec mult
 
-
-So you can see here that the difficult part is finding a functional inverse for the gradient, since after that the operator is pretty mechanical.
+So you can see here that the difficult part is finding a functional inverse for the gradient, since after that the operator is completely mechanical, if rather tedious. Again, you can also have it in terms of $x_i$.
 
 \section{Neural Net}
 
@@ -146,13 +144,17 @@ Of particular interest in application of Newton's method to high dimensional sys
 
 With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the dependencies of the original Pearlmutter application of the operator, initial results require further results in the inverse regime. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron. (You can also use the approximation of the G\^{a}teaux derivative which doesn't take the limit of $r$ pretty easily, but that one has numerical problems.)
 
-The G\^{a}teaux derivative is a formalization of the functional derivative, but I haven't gotten anywhere by using the functional derivative, although it seems tempting.
+The G\^{a}teaux derivative is a formalization of the functional derivative, but I haven't gotten anywhere by using the functional derivative, although it seems tempting. Of especial note is the fact that
 
-You might think that you might use the $R_v$ on the original gradient functions. However, the $v$'s seem to me to be different. Often the Jacobian determinant is zero, but you can avoid this by construction (pick another random initialization). I assume you are completely familiar with neural nets already\cite{deeplearning}.
+$$\frac{\delta f^{-1}(x)}{\delta f(y)} = - \frac{\delta(f^-1(x) - y)}{f'(f^{-1}(x)} $$
+
+But then you have to find the inverse of the neural net in the first place. The same holds for finding the Legendre transformation.
+
+Often the Jacobian determinant is zero, but you can avoid this by construction (pick another random initialization). I assume you are completely familiar with neural nets already\cite{deeplearning}.
 
 Specific example is with sum of squared error and no softmax.
 
-Forward steps:
+Forward steps of the plain neural net:
 
 $$ net_1 = xW_1 $$
 $$ h_1 = act(net_1) $$
@@ -168,16 +170,22 @@ $$ \frac{\partial J}{\partial h_2} = h_2 - y $$
 %%%%%%%%%%%%
 %%%%%%%%%%%%
 
-For reference, here is also listed $Hv$:
+For reference, here is also listed the steps to get $Hv$:
 
-%%%% forward Hv
+$$ R(net) = R(x)W_1 + xv_1 $$
+$$ R(h_1) = act'(net_1)R(net_1) $$
+$$ R(net_2) = R(h_1)W_2 + h_1v_2 $$
+$$ R(h_2) = act'(net_2)R(net_2) $$
+$$ R(\frac{\partial J}{\partial h_2}) = R(h_2) $$
 %%%% backward Hv
+$$ R(\frac{\partial J}{\partial net_2}) = R(h_2) $$
+
 
 The functional inverse of the gradient:
 %%% backward to error
 %%% error to forwards
 
-Finally, $H^{-1}v$:
+Finally, what would be $H^{-1}v$:
 
 %%%% backward H^{-1}v
 %%%% forward H^{-1}v
@@ -188,9 +196,9 @@ There are many heterodox views of neural networks, Werbos-Rumelhart-style backpr
 
 Second order phenomena are obviously of great interest to both heterodox views. I will present the view I have of how this impinges on them, but don't pretend to have any proof for the view.
 
-In the firm-simulation it seems to be a firm without intrafirm conflict, sort of a communitarian utopian firm, because the taking into account curvature of each parameter with each other parameter seems to coincide with a sort of agreement. This amuses me greatly in that it takes the term "trust region" much more literally than imagined. The contention that machine learning is about credit assignment systems is also taken much more literally than imagined.
+In the firm-simulation it seems to be a firm without intrafirm conflict, sort of a communitarian utopian firm, because the taking into account curvature of each parameter with each other parameter seems to coincide with a sort of agreement. This amuses me greatly in that it takes the term "trust region" much more literally than imagined.
 
-In the view as 1-lattice with spins, there is a renormalization phenomenon where the inverse Hessian futzes with the exponential gradient correlational structure (the vanishing or exponential gradient) which seems very reminiscent of the onset of criticality in second-order phase transition.
+In the view as 1-lattice with spins, the inverse Hessian futzes with the exponential gradient correlational structure (the vanishing or exponential gradient) which seems very reminiscent of the onset of the power law of correlations in various critical phenomena.
 
 You might, of course, just care about second-order methods for completely normal optimizational reasons.
 
