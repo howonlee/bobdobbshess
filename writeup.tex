@@ -21,7 +21,7 @@ The Hessian is the matrix of second derivatives of a function. In Newton's metho
 
 There is a shortcut which already exists which is usually more used in neural networks. In neural networks it was introduced by \cite{pearlmutter1994}. It consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done\cite{martens2010}. In the following, an inverse Hessian-vector multiplication is shown.
 
-\section{J. R. "Bob" Dobbs Method}
+\section{J. R. "Bob" Dobbs Memorial Method}
 
 Recall the Hessian is a Jacobian, and it is found in the Taylor expansion of the gradient of a function about a point. The crux of the J. R. "Bob" Dobbs method is to realize that the inverse Hessian is itself a Jacobian and it is found in the Taylor expansion of the functional inverse of the gradient of a function about a point.
 
@@ -83,19 +83,27 @@ $$ f_1(x) = \sum_i x_i^3 $$
 
 $$ \nabla f_1(x)_i = 3 x_i^2 $$
 
-%%%% Hessian vec mult
+For reference, $Hv$.
+
+$$ Hv = \frac{\partial}{\partial r} 3 (x_i + rv_i)^2 |_{r=0} $$
+
+$$ Hv = 6x_iv_i \frac{\partial}{\partial r} 3 (x_i + rv_i)^2 |_{r=0} $$
 
 Let $ \nabla f_1(x)_i = z_i$
 
 $$ x_i = \sqrt{\frac{z_i}{3}} $$
 
-%%%% inverse Hessian vec mult
+$$ H^{-1}v = \frac{\partial}{\partial r} (\frac{z_i + rv_i}{3})^{\frac{1}{2}} |_{r=0} $$
+
+$$ H^{-1}v = \frac{1}{2} (\frac{z_i + rv_i}{3})^{-\frac{1}{2}}(\frac{v_i}{3}) |_{r=0} $$
+
+$$ H^{-1}v = \frac{1}{2} (\frac{z_i}{3})^{-\frac{1}{2}}(\frac{v_i}{3}) $$
 
 Of course, that one was trivial anyhow.
 
 $$ f_2(x) = \prod_i x_i$$
 
-$$ \nabla f_2(x)_i = \prod_{j \ni i} x_j$$
+$$ \nabla f_2(x)_i = \prod_{j !\in i} x_j$$
 
 Take cardinality of the x vector to be 3 to avoid extremely long derivation.
 
