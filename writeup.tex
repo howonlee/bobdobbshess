@@ -146,7 +146,7 @@ With minibatches (but only with very large minibatches), the functional inverse 
 
 The G\^{a}teaux derivative is a formalization of the functional derivative, but I haven't gotten anywhere by using the functional derivative, although it seems tempting. Of especial note is the fact that
 
-$$\frac{\delta f^{-1}(x)}{\delta f(y)} = - \frac{\delta(f^-1(x) - y)}{f'(f^{-1}(x)} $$
+$$\frac{\delta f^{-1}(x)}{\delta f(y)} = - \frac{\delta(f^{-1}(x) - y)}{f'(f^{-1}(x)} $$
 
 But then you have to find the inverse of the neural net in the first place. The same holds for finding the Legendre transformation.
 
@@ -165,10 +165,11 @@ $$ J = err(h_2, y) $$
 Backward steps:
 
 $$ \frac{\partial J}{\partial h_2} = h_2 - y $$
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
-%%%%%%%%%%%%
+$$ \frac{\partial J}{\partial net_2} = $$ %%%%%%%%
+$$ \frac{\partial J}{\partial h_1} = $$ %%%%%%%%
+$$ \frac{\partial J}{\partial net_1} = $$ %%%%%%%%
+$$ \frac{\partial J}{\partial W_2} = $$ %%%%%%%%
+$$ \frac{\partial J}{\partial W_1} = $$ %%%%%%%%
 
 For reference, here is also listed the steps to get $Hv$:
 
@@ -177,9 +178,11 @@ $$ R(h_1) = act'(net_1)R(net_1) $$
 $$ R(net_2) = R(h_1)W_2 + h_1v_2 $$
 $$ R(h_2) = act'(net_2)R(net_2) $$
 $$ R(\frac{\partial J}{\partial h_2}) = R(h_2) $$
-%%%% backward Hv
-$$ R(\frac{\partial J}{\partial net_2}) = R(h_2) $$
-
+$$ R(\frac{\partial J}{\partial net_2}) = $$ %%%%%%%%%
+$$ R(\frac{\partial J}{\partial h_1}) = $$ %%%%%%%%%
+$$ R(\frac{\partial J}{\partial net_1}) = $$ %%%%%%%%%
+$$ Hv_2 = R(\frac{\partial J}{\partial W_2}) = $$ %%%%%%%%%
+$$ Hv_1 = R(\frac{\partial J}{\partial W_1}) = $$ %%%%%%%%%
 
 The functional inverse of the gradient:
 %%% backward to error
@@ -192,7 +195,7 @@ Finally, what would be $H^{-1}v$:
 
 \section{Discussion / Strange Speculative Statements}
 
-There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms. Another is to think of them as spins on a 1-lattice with weirdo boundary conditions, each \textit{layer} one \textit{spin} on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
+There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms, which also transduce credit through functional layers. Another is to think of them as spins on a 1-lattice with weirdo boundary conditions, each \textit{layer} one \textit{spin} on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
 
 Second order phenomena are obviously of great interest to both heterodox views. I will present the view I have of how this impinges on them, but don't pretend to have any proof for the view.
 
