@@ -73,11 +73,13 @@ $$H^{-1}v = \frac{\nabla_w^{-1}(\nabla w + rv) - \nabla_w^{-1}(\nabla w)}{r} + O
 
 $$H^{-1}v = \frac{\partial}{\partial r} \nabla_w^{-1} (\nabla w + rv) |_{r=0}$$
 
-And the differential operator, denoted $B$ because of the different semantics, is as such
+And the differential operator, denoted $B$ because of the different semantics, is as such. Note it's still just a G\^{a}teaux derivative.
 
 $$B(f(\nabla w)) = \frac{\partial}{\partial r} f(\nabla w + rv)|_{r=0}$$
 
 \section{Examples}
+
+\subsection{}
 
 $$ f_1(x) = \sum_i x_i^3 $$
 
@@ -99,13 +101,22 @@ $$ H^{-1}v = \frac{1}{2} (\frac{z_i + rv_i}{3})^{-\frac{1}{2}}(\frac{v_i}{3}) |_
 
 $$ H^{-1}v = \frac{1}{2} (\frac{z_i}{3})^{-\frac{1}{2}}(\frac{v_i}{3}) $$
 
-Of course, that one was trivial anyhow.
+Recall $z_i = 3 x_i^2$ if you want it in terms of $x$.
+
+Of course, that one was trivial anyhow. Let's do one with some off-diagonal elements in the Hessian.
+
+\subsection{}
 
 $$ f_2(x) = \prod_i x_i$$
 
-$$ \nabla f_2(x)_i = \prod_{j !\in i} x_j$$
-
 Take cardinality of the x vector to be 3 to avoid extremely long derivation.
+
+$$ f_2(x) = x_1x_2x_3 $$
+
+$$ \nabla f_2(x)_1 = x_2x_3 $$
+$$ \nabla f_2(x)_2 = x_1x_3 $$
+$$ \nabla f_2(x)_3 = x_1x_2 $$
+
 
 Again let $ \nabla f_2(x)_i = z_i$
 
@@ -119,7 +130,7 @@ So you can see here that the difficult part is finding a functional inverse for 
 
 Of particular interest in application of Newton's method to high dimensional systems is in neural networks. I have made several attempts to attack them with this method but it is surprisingly difficult to get the functional inverse of a neural network gradient with respect to the weights which is compatible with the differential operator.
 
-With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the dependencies of the original Pearlmutter application of the operator, initial results require further results in the inverse regime. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron. (You can also use the approximation which doesn't take the limit of $r$ pretty easily, but that one has numerical problems.)
+With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the dependencies of the original Pearlmutter application of the operator, initial results require further results in the inverse regime. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron. (You can also use the approximation of the G\^{a}teaux derivative which doesn't take the limit of $r$ pretty easily, but that one has numerical problems.)
 
 The G\^{a}teaux derivative is a formalization of the functional derivative, but I haven't gotten anywhere by using the functional derivative, although it seems tempting.
 
