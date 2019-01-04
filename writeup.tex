@@ -81,10 +81,14 @@ $$B(f(\nabla w)) = \frac{\partial}{\partial r} f(\nabla w + rv)|_{r=0}$$
 
 $$ f_1(x) = \sum_i x_i^3 $$
 
-%%%% gradient
+$$ \nabla f_1(x)_i = 3 x_i^2 $$
+
+Let $ \nabla f_1(x)_i = z_i$
+
+$$ x_i = \sqrt{\frac{z_i}{3}} $$
+
 %%%% hessian
 %%%% hessian vec mult
-%%%% inverse gradient
 %%%% inverse hessian
 %%%% inverse hessian vec mult
 
@@ -92,7 +96,12 @@ Of course, that one was trivial anyhow.
 
 $$ f_2(x) = \prod_i x_i$$
 
-%%%%% gradient
+$$ \nabla f_2(x)_i = \prod_{j \ni i} x_j$$
+
+Take cardinality of the x vector to be 3 to avoid extremely long derivation.
+
+Again let $ \nabla f_2(x)_i = z_i$
+
 %%%%% hessian vec mult
 %%%%% inverse gradient
 %%%%% inverse hessian vec mult
