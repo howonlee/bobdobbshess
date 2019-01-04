@@ -165,11 +165,11 @@ $$ J = err(h_2, y) $$
 Backward steps:
 
 $$ \frac{\partial J}{\partial h_2} = h_2 - y $$
-$$ \frac{\partial J}{\partial net_2} = $$ %%%%%%%%
-$$ \frac{\partial J}{\partial h_1} = $$ %%%%%%%%
-$$ \frac{\partial J}{\partial net_1} = $$ %%%%%%%%
-$$ \frac{\partial J}{\partial W_2} = $$ %%%%%%%%
-$$ \frac{\partial J}{\partial W_1} = $$ %%%%%%%%
+$$ \frac{\partial J}{\partial net_2} = act'(net_2)\frac{\partial J}{\partial h_2}$$
+$$ \frac{\partial J}{\partial h_1} = \frac{\partial J}{\partial net_2} W_2^T$$
+$$ \frac{\partial J}{\partial net_1} = act'(net_1)\frac{\partial J}{\partial h_1}$$
+$$ \frac{\partial J}{\partial W_2} = \frac{\partial J}{\partial net_2} h_1$$
+$$ \frac{\partial J}{\partial W_1} = \frac{\partial J}{\partial net_1} x$$
 
 For reference, here is also listed the steps to get $Hv$:
 
