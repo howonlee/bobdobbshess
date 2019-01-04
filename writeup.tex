@@ -154,16 +154,13 @@ Often the Jacobian determinant is zero, but you can avoid this by construction (
 
 Specific example is with sum of squared error and no softmax.
 
-Forward steps of the plain neural net:
+$\nabla_w$ of neural net:
 
 $$ net_1 = xW_1 $$
 $$ h_1 = act(net_1) $$
 $$ net_2 = h_1W_2 $$
 $$ h_2 = act(net_2) $$
 $$ J = err(h_2, y) $$
-
-Backward steps:
-
 $$ \frac{\partial J}{\partial h_2} = h_2 - y $$
 $$ \frac{\partial J}{\partial net_2} = act'(net_2)\frac{\partial J}{\partial h_2}$$
 $$ \frac{\partial J}{\partial h_1} = \frac{\partial J}{\partial net_2} W_2^T$$
@@ -197,9 +194,16 @@ $$ W_2 = $$ %%%%
 $$ W_1 = $$ %%%%
 
 Finally, what would be $H^{-1}v$:
-
-%%%% backward H^{-1}v
-%%%% forward H^{-1}v
+$$ B(\frac{\partial J}{\partial net_1}) = $$ %%%%%
+$$ B(\frac{\partial J}{\partial h_1}) = $$ %%%%%
+$$ B(\frac{\partial J}{\partial net_2}) = $$ %%%%
+$$ B(\frac{\partial J}{\partial h_2}) = $$ %%%%
+$$ B(h_2) = $$ %%%%
+$$ B(net_2) = $$ %%%%
+$$ B(h_1) = $$ %%%%
+$$ B(net_1) = $$ %%%%
+$$ H^{-1}v_2 = B(W_2) = $$ %%%%
+$$ H^{-1}v_1 = B(W_1) = $$ %%%%
 
 \section{Discussion / Strange Speculative Statements}
 
