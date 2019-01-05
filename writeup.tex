@@ -17,7 +17,7 @@ You care about multiplication of the inverse Hessian with a vector because Newto
 
 \section{Introduction}
 
-The Hessian is the matrix of second derivatives of a function. In Newton's method for optimizations, it is the second derivative with respect to an optimization target. But Newton's method requires the multiplicative inverse of the Hessian (in one dimension, it requires the multiplicative inverse of the second derivative). This led to Newton's method being computationally infeasible for most optimizational regimes where the dimensionality is high, because if the dimension of the system is $n$, the naive inversion of the Newton's method takes $O(n^2)$ space and $O(n^3)$ time.
+The Hessian is the matrix of second derivatives of a function. In Newton's method for optimizations, it is the second derivative with respect to an optimization target. But Newton's method requires the multiplicative inverse of the Hessian (in one dimension, it requires the multiplicative inverse of the second derivative). This led to Newton's method being computationally infeasible for most optimizational regimes where the dimensionality is high, because if the dimension of the system is $n$ (meaning the cardinality of the Hessian is $O(n^2)$), the naive inversion of the Newton's method takes $O(n^2)$ space and $O(n^3)$ time.
 
 There is a shortcut which already exists which is usually more used in neural networks. In neural networks it was introduced by \cite{pearlmutter1994}. It consists in noting that the Hessian is a Jacobian itself and finding the Hessian in the Taylor approximation of the gradient about a point. This means that the Hessian-vector multiplication can be found like a sparse matrix-vector multiplication, linear to the order of the vector. However this gives a Hessian-vector multiplication only, not an inverse Hessian-vector multiplication, so one must use Krylov methods to get optimization done\cite{martens2010}. In the following, an inverse Hessian-vector multiplication is shown.
 
@@ -59,7 +59,7 @@ Pearlmutter calculates that by defining a differential operator $R$ (the G\^{a}t
 
 $$R(f(w)) = \frac{\partial}{\partial r} f(w + rv)|_{r=0}$$
 
-and mechanically going through the equations for calculating $\nabla_w$ step by step, so that the $R(\delta)$ get cached there, too.
+and mechanically going through the equations for calculating $\nabla_w$ step by step, so that the $R(\delta)$, or the $R(\frac{J}{net})$ get cached there, too.
 
 But, given our definition of $H^{-1}$ above, we will actually find $H^{-1}$ about the expansion of the functional inverse of the gradient about a point. Not the integral of the Green's function (at least not directly), not the multiplicative inverse of the gradient (unless the multiplicative inverse corresponds with the functional inverse), the functional inverse.
 
@@ -142,13 +142,15 @@ So you can see here that the difficult part is finding a functional inverse for 
 
 Of particular interest in application of Newton's method to high dimensional systems is in neural networks. I have made several attempts to attack them with this method but it is surprisingly difficult to get the functional inverse of a neural network gradient with respect to the weights which is compatible with the differential operator.
 
-With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the dependencies of the original Pearlmutter application of the operator, initial results require further results in the inverse regime. Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron. (You can also use the approximation of the G\^{a}teaux derivative which doesn't take the limit of $r$ pretty easily, but that one has numerical problems.)
+With minibatches (but only with very large minibatches), the functional inverse of the gradient is actually pretty trivial. However, with actual application of the differential operator, I found that unlike the DAG structure of the dependencies of the original Pearlmutter application of the operator, initial results require further results in the inverse regime.
+
+Of course one could just approximate those numerically, so at least I present what I have right now for a 1-hidden-layer fully-connected multilayer perceptron. (You can also use the approximation of the G\^{a}teaux derivative which doesn't take the limit of $r$ pretty easily, but that one has numerical problems.)
 
 The G\^{a}teaux derivative is a formalization of the functional derivative, but I haven't gotten anywhere by using the functional derivative, although it seems tempting. Of especial note is the fact that
 
 $$\frac{\delta f^{-1}(x)}{\delta f(y)} = - \frac{\delta(f^{-1}(x) - y)}{f'(f^{-1}(x)} $$
 
-But then you have to find the inverse of the neural net in the first place. The same holds for finding the Legendre transformation.
+But then that doesn't help the dependency problem. The same holds for finding the Legendre transformation.
 
 Often the Jacobian determinant is zero, but you can avoid this by construction (pick another random initialization). I assume you are completely familiar with neural nets already\cite{deeplearning}.
 
@@ -216,6 +218,8 @@ In the firm-simulation it seems to be a firm without intrafirm conflict, sort of
 In the view as 1-lattice with spins, the inverse Hessian futzes with the exponential gradient correlational structure (the vanishing or exponential gradient) which seems very reminiscent of the onset of the power law of correlations in various critical phenomena.
 
 You might, of course, just care about second-order methods for completely normal optimizational reasons.
+
+Thanks to the CSPAM peeps, HG, JB, JH and SCM for letting me annoy them while writing this. Preemptive apologies to JLM and JB for doing weird things.
 
 \section{Citations}
 
