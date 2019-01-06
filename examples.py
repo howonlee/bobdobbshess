@@ -20,9 +20,9 @@ def hess_mult1(x, v):
     """ hessian pre-multiplication as in Pearlmutter 1993 """
     return 6. * x * v
 
-def hess_inv_mult1(z, v):
-    """ inverse hessian pre-multiplication, the novel bit """
-    return (0.5 * np.power(z / 3., -0.5)) * (v / 3.)
+def hess_inv_mult1(x, v):
+    """ inverse hessian pre-multiplication, the novel bit. I switched vars"""
+    return (0.5) * (v / (3. * x))
 
 def test_f1():
     xs = npr.randn(3)
@@ -34,7 +34,7 @@ def test_f1():
     print("inv grad of grad of fn 1 should just be xs: ", inv_grad1(grad1(xs)))
     print("hess mult of vs: ", hess_mult1(xs, vs))
     print("inv hess mult of hess mult of vs should just be vs: ",
-            hess_inv_mult1(grad1(xs), hess_mult1(xs, vs)))
+            hess_inv_mult1(xs, hess_mult1(xs, vs)))
 
 """
 fn 2: less easy one. assume cardinality x is 3
