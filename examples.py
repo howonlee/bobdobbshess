@@ -25,8 +25,8 @@ def hess_inv_mult1(z, v):
     return (0.5 * np.power(z / 3., -0.5)) * (v / 3.)
 
 def test_f1():
-    xs = npr.randn(10)
-    vs = npr.randn(10)
+    xs = npr.randn(3)
+    vs = npr.randn(3)
     print("xs: ", xs)
     print("vs: ", vs)
     print("fn 1: ", fn1(xs))
@@ -66,9 +66,9 @@ def hess_mult2(x, v):
 
 def hess_inv_mult2(z, v):
     return np.array([
-        np.power((z[1] * z[2]) / z[0], -0.5) * (((v[1] * z[2] + v[2] * z[1]) * z[0] - (v[0] * z[1] * z[2])) / (z[0] ** 2)),
-        np.power((z[0] * z[2]) / z[1], -0.5) * (((v[0] * z[2] + v[2] * z[0]) * z[1] - (v[1] * z[0] * z[2])) / (z[1] ** 2)),
-        np.power((z[0] * z[1]) / z[2], -0.5) * (((v[0] * z[1] + v[1] * z[0]) * z[2] - (v[2] * z[0] * z[1])) / (z[2] ** 2)),
+        0.5 * np.power((z[1] * z[2]) / z[0], -0.5) * (((v[1] * z[2] + v[2] * z[1]) * z[0] - (v[0] * z[1] * z[2])) / (z[0] ** 2)),
+        0.5 * np.power((z[0] * z[2]) / z[1], -0.5) * (((v[0] * z[2] + v[2] * z[0]) * z[1] - (v[1] * z[0] * z[2])) / (z[1] ** 2)),
+        0.5 * np.power((z[0] * z[1]) / z[2], -0.5) * (((v[0] * z[1] + v[1] * z[0]) * z[2] - (v[2] * z[0] * z[1])) / (z[2] ** 2)),
         ])
 
 def test_f2():
