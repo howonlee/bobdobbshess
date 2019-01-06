@@ -5,7 +5,7 @@
 \begin{document}
 \title{J. R. "Bob" Dobbs Memorial Inverse Hessian-Vector Multiplication Method}
 \author{Howon Lee}
-\date{2019 January}
+\date{January 8 2019}
 \maketitle
 
 \begin{quote}
@@ -216,6 +216,8 @@ $$ H^{-1}v_1 = B(W_1) = B(x^+) net_1 + x^+ B(net_1)$$
 At this point, one understands why Pearlmutter used a variant short notation.
 
 \section{Discussion / Strange Speculative Statements}
+
+It may be more worth the while to find a network architecture where the weight-to-gradient function is involutive, or at least less of a pain to invert in a way compatible with the differential operator. I have begun work on this.
 
 There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms, which also transduce credit through functional layers. Another is to think of them as spins on a 1-lattice with weirdo boundary conditions, each \textit{layer} one \textit{spin} on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
 
