@@ -177,11 +177,13 @@ $$ R(h_1) = act'(net_1)R(net_1) $$
 $$ R(net_2) = R(h_1)W_2 + h_1v_2 $$
 $$ R(h_2) = act'(net_2)R(net_2) $$
 $$ R(\frac{\partial J}{\partial h_2}) = R(h_2) $$
-$$ R(\frac{\partial J}{\partial net_2}) = $$ %%%%%%%%%
-$$ R(\frac{\partial J}{\partial h_1}) = $$ %%%%%%%%%
-$$ R(\frac{\partial J}{\partial net_1}) = $$ %%%%%%%%%
-$$ Hv_2 = R(\frac{\partial J}{\partial W_2}) = $$ %%%%%%%%%
-$$ Hv_1 = R(\frac{\partial J}{\partial W_1}) = $$ %%%%%%%%%
+$$ R(\frac{\partial J}{\partial net_2}) = R(\frac{\partial J}{\partial h_2}) act'(net_2) +
+        \frac{\partial J}{\partial h_2} act''(net_2) R(net_2)$$
+$$ R(\frac{\partial J}{\partial h_1}) = R(\frac{\partial J}{\partial net_2}) W_2^T + \frac{\partial J}{\partial net_2} v_2^T $$
+$$ R(\frac{\partial J}{\partial net_1}) = R(\frac{\partial J}{\partial h_1}) act'(net_1) +
+        \frac{\partial J}{\partial h_1} act''(net_1) R(net_1)$$
+$$ Hv_2 = R(\frac{\partial J}{\partial W_2}) = R(\frac{\partial J}{\partial net_2}) h_1 + \frac{\partial J}{\partial net_2} R(h_1)$$
+$$ Hv_1 = R(\frac{\partial J}{\partial W_1}) = R(\frac{\partial J}{\partial net_1}) x + \frac{\partial J}{\partial net_1} R(x)$$
 
 The functional inverse of the gradient:
 $$ \frac{\partial J}{\partial net_1} = $$ %%%%%
@@ -215,7 +217,7 @@ Second order phenomena are obviously of great interest to both heterodox views. 
 
 In the firm-simulation it seems to be a firm without intrafirm conflict, sort of a communitarian utopian firm, because the taking into account curvature of each parameter with each other parameter seems to coincide with a sort of agreement. This amuses me greatly in that it takes the term "trust region" much more literally than imagined.
 
-In the view as 1-lattice with spins, the inverse Hessian futzes with the exponential gradient correlational structure (the vanishing or exponential gradient) which seems very reminiscent of the onset of the power law of correlations in various critical phenomena.
+In the view as 1-lattice with spins, the inverse Hessian futzes with the exponential gradient correlational structure (the vanishing or exponential gradient) which seems very reminiscent of the onset of the power law of correlations in various critical phenomena. The state of the art for making correlational structure (or rather, gradient flow) extensive is to my knowledge just LSTM's\cite{lstm}.
 
 You might, of course, just care about second-order methods for completely normal optimizational reasons.
 
@@ -234,6 +236,8 @@ Goodfellow, I., Bengio, Y., Courville, A., \& Bengio, Y. (2016). Deep learning (
 Martens, J. (2010, June). Deep learning via Hessian-free optimization. In ICML (Vol. 27, pp. 735-742).
 \bibitem{gateaux1913}
 G\^{a}teaux, R. (1913). Sur les fonctionnelles continues et les fonctionnelles analytiques. CR Acad. Sci. Paris, 157(325-327), 65.
+\bibitem{lstm}
+Hochreiter, S., \& Schmidhuber, J. (1997). Long short-term memory. Neural computation, 9(8), 1735-1780.
 \end{thebibliography}
 
 \end{document}
