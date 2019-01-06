@@ -46,8 +46,11 @@ def inv_grad(z):
     ])
 
 def hess_mult(x, v):
-    ############
-    pass
+    return np.array([
+        v[1] * x[2] + v[2] * x[1],
+        v[0] * x[2] + v[2] * x[0],
+        v[0] * x[1] + v[1] * x[0],
+        ])
 
 def hess_inv_mult(z, v):
     ############
