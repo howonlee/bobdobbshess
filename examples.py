@@ -52,9 +52,9 @@ def grad2(x):
 
 def inv_grad2(z):
     return np.array([
-        np.sqrt((x[1] * x[2]) / x[0]),
-        np.sqrt((x[0] * x[2]) / x[1]),
-        np.sqrt((x[0] * x[1]) / x[2]),
+        np.sqrt((z[1] * z[2]) / z[0]),
+        np.sqrt((z[0] * z[2]) / z[1]),
+        np.sqrt((z[0] * z[1]) / z[2]),
     ])
 
 def hess_mult2(x, v):
@@ -72,7 +72,17 @@ def hess_inv_mult2(z, v):
         ])
 
 def test_f2():
-    pass
+    xs = npr.randn(3)
+    vs = npr.randn(3)
+    print("xs: ", xs)
+    print("vs: ", vs)
+    print("fn 2: ", fn2(xs))
+    print("gradient of fn 2: ", grad2(xs))
+    print("inv grad of grad of fn 2 should just be xs: ", inv_grad2(grad2(xs)))
+    print("hess mult of vs: ", hess_mult2(xs, vs))
+    print("inv hess mult of hess mult of vs should just be vs: ",
+            hess_inv_mult2(grad2(xs), hess_mult2(xs, vs)))
 
 if __name__ == "__main__":
     test_f1()
+    test_f2()
