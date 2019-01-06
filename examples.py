@@ -24,40 +24,46 @@ def hess_inv_mult1(z, v):
     """ inverse hessian pre-multiplication, the novel bit """
     return (0.5 * np.power(z / 3., -0.5)) * (v / 3.)
 
+def test_f1():
+    pass
+
 """
 fn 2: less easy one. assume cardinality x is 3
 """
 
-def fn1(x):
+def fn2(x):
     return x[0] * x[1] * x[2]
 
-def grad1(x):
+def grad2(x):
     return np.array([
         x[1] * x[2],
         x[0] * x[2],
         x[0] * x[1],
     ])
 
-def inv_grad(z):
+def inv_grad2(z):
     return np.array([
-        np.sqrt((x[1] * x[2]) / x[0}),
-        np.sqrt((x[0] * x[2]) / x[1}),
-        np.sqrt((x[0] * x[1]) / x[2}),
+        np.sqrt((x[1] * x[2]) / x[0]),
+        np.sqrt((x[0] * x[2]) / x[1]),
+        np.sqrt((x[0] * x[1]) / x[2]),
     ])
 
-def hess_mult(x, v):
+def hess_mult2(x, v):
     return np.array([
         v[1] * x[2] + v[2] * x[1],
         v[0] * x[2] + v[2] * x[0],
         v[0] * x[1] + v[1] * x[0],
         ])
 
-def hess_inv_mult(z, v):
+def hess_inv_mult2(z, v):
     return np.array([
         np.power((z[1] * z[2]) / z[0], -0.5) * (((v[1] * z[2] + v[2] * z[1]) * z[0] - (v[0] * z[1] * z[2])) / (z[0] ** 2)),
         np.power((z[0] * z[2]) / z[1], -0.5) * (((v[0] * z[2] + v[2] * z[0]) * z[1] - (v[1] * z[0] * z[2])) / (z[1] ** 2)),
         np.power((z[0] * z[1]) / z[2], -0.5) * (((v[0] * z[1] + v[1] * z[0]) * z[2] - (v[2] * z[0] * z[1])) / (z[2] ** 2)),
         ])
+
+def test_f2():
+    pass
 
 if __name__ == "__main__":
     pass
