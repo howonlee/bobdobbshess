@@ -25,7 +25,16 @@ def hess_inv_mult1(z, v):
     return (0.5 * np.power(z / 3., -0.5)) * (v / 3.)
 
 def test_f1():
-    pass
+    xs = npr.randn(10)
+    vs = npr.randn(10)
+    print("xs: ", xs)
+    print("vs: ", vs)
+    print("fn 1: ", fn1(xs))
+    print("gradient of fn 1: ", grad1(xs))
+    print("inv grad of grad of fn 1 should just be xs: ", inv_grad1(grad1(xs)))
+    print("hess mult of vs: ", hess_mult1(xs, vs))
+    print("inv hess mult of hess mult of vs should just be vs: ",
+            hess_inv_mult1(grad1(xs), hess_mult1(xs, vs)))
 
 """
 fn 2: less easy one. assume cardinality x is 3
@@ -66,4 +75,4 @@ def test_f2():
     pass
 
 if __name__ == "__main__":
-    pass
+    test_f1()
