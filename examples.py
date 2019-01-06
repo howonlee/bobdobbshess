@@ -25,11 +25,34 @@ def hess_inv_mult1(z, v):
     return (0.5 * np.power(z / 3., -0.5)) * (v / 3.)
 
 """
-fn 2: less easy one
+fn 2: less easy one. assume cardinality x is 3
 """
 
 def fn1(x):
     return x[0] * x[1] * x[2]
+
+def grad1(x):
+    return np.array([
+        x[1] * x[2],
+        x[0] * x[2],
+        x[0] * x[1],
+    ])
+
+def inv_grad(z):
+    return np.array([
+        np.sqrt((x[1] * x[2]) / x[0}),
+        np.sqrt((x[0] * x[2]) / x[1}),
+        np.sqrt((x[0] * x[1]) / x[2}),
+    ])
+
+def hess_mult(x, v):
+    ############
+    pass
+
+def hess_inv_mult(z, v):
+    ############
+    ############
+    pass
 
 if __name__ == "__main__":
     pass
