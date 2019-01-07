@@ -64,11 +64,12 @@ def hess_mult2(x, v):
         v[0] * x[1] + v[1] * x[0],
         ])
 
-def hess_inv_mult2(z, v):
+def hess_inv_mult2(x, v):
+    denom = 2. * x[0] * x[1] * x[2]
     return np.array([
-        0.5 * np.power((z[1] * z[2]) / z[0], -0.5) * (((v[1] * z[2] + v[2] * z[1]) * z[0] - (v[0] * z[1] * z[2])) / (z[0] ** 2)),
-        0.5 * np.power((z[0] * z[2]) / z[1], -0.5) * (((v[0] * z[2] + v[2] * z[0]) * z[1] - (v[1] * z[0] * z[2])) / (z[1] ** 2)),
-        0.5 * np.power((z[0] * z[1]) / z[2], -0.5) * (((v[0] * z[1] + v[1] * z[0]) * z[2] - (v[2] * z[0] * z[1])) / (z[2] ** 2)),
+        ((v[1] * x[0] * x[1]) + (v[2] * x[0] * x[2]) - (v[0] * x[0] * x[0])) / denom,
+        ((v[0] * x[1] * x[0]) + (v[2] * x[1] * x[2]) - (v[1] * x[1] * x[1])) / denom,
+        ((v[0] * x[0] * x[2]) + (v[1] * x[1] * x[2]) - (v[2] * x[2] * x[2])) / denom,
         ])
 
 def test_f2():
@@ -81,7 +82,7 @@ def test_f2():
     print("inv grad of grad of fn 2 should just be xs: ", inv_grad2(grad2(xs)))
     print("hess mult of vs: ", hess_mult2(xs, vs))
     print("inv hess mult of hess mult of vs should just be vs: ",
-            hess_inv_mult2(grad2(xs), hess_mult2(xs, vs)))
+            hess_inv_mult2(xs, hess_mult2(xs, vs)))
 
 if __name__ == "__main__":
     test_f1()
