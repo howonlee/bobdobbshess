@@ -95,7 +95,7 @@ Let $ \nabla f_1(x)_i = z_i$
 
 $$ x_i = \sqrt{\frac{z_i}{3}} $$
 
-Sign will actually be wrong on the result because it's really $\pm \frac{z_i}{3}$. So you do need to store the sign or switch variables to $x$ after.
+Sign will actually be wrong on the result because it's really $\pm \sqrt{\frac{z_i}{3}}$. So you do need to store the sign or switch variables to $x$ after.
 
 $$ H^{-1}v = \frac{\partial}{\partial r} (\frac{z_i + rv_i}{3})^{\frac{1}{2}} |_{r=0} $$
 
@@ -132,7 +132,7 @@ $$ x_1 = \sqrt{\frac{z_2z_3}{z_1}} $$
 $$ x_2 = \sqrt{\frac{z_1z_3}{z_2}} $$
 $$ x_3 = \sqrt{\frac{z_1z_2}{z_3}} $$
 
-Again, sign will actually be wrong on the result because it's really $\pm \frac{z_2z_3}{z_1}$ and so on. So you do need to store the sign or change variables.
+Again, sign will actually be wrong on the result because it's really $\pm \sqrt{\frac{z_2z_3}{z_1}}$ and so on. So you do need to store the sign or change variables.
 
 $$ (H^{-1}v)_1 = \frac{\partial}{\partial r} (\frac{(z_2 + rv_2)(z_3 +rv_3)}{(z_1 + rv_1)})^{\frac{1}{2}} |_{r=0} $$
 $$ (H^{-1}v)_1 = \frac{1}{2} (\frac{(z_2 + rv_2)(z_3 +rv_3)}{(z_1 + rv_1)})^{-\frac{1}{2}} \frac{(v_2(z_3 + rv_3) + v_3(z_2 + rv_2))(z_1 + rv_1) - v_1(z_2 + rv_2)(z_3 + rv_3)}{(z_1 + rv_1)^2} |_{r=0} $$
