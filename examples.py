@@ -31,7 +31,7 @@ def test_f1():
     print("vs: ", vs)
     print("fn 1: ", fn1(xs))
     print("gradient of fn 1: ", grad1(xs))
-    print("inv grad of grad of fn 1 should just be xs: ", inv_grad1(grad1(xs)))
+    print("inv grad of grad of fn 1 should just be abs xs: ", inv_grad1(grad1(xs)))
     print("hess mult of vs: ", hess_mult1(xs, vs))
     print("inv hess mult of hess mult of vs should just be vs: ",
             hess_inv_mult1(xs, hess_mult1(xs, vs)))
@@ -79,7 +79,7 @@ def test_f2():
     print("vs: ", vs)
     print("fn 2: ", fn2(xs))
     print("gradient of fn 2: ", grad2(xs))
-    print("inv grad of grad of fn 2 should just be xs: ", inv_grad2(grad2(xs)))
+    print("inv grad of grad of fn 2 should just be abs xs: ", inv_grad2(grad2(xs)))
     print("hess mult of vs: ", hess_mult2(xs, vs))
     print("inv hess mult of hess mult of vs should just be vs: ",
             hess_inv_mult2(xs, hess_mult2(xs, vs)))
