@@ -13,7 +13,7 @@ I'm not saying that machine learning is the portal to a demon universe, I'm just
 \end{quote}
 
 \section{Abstract}
-You care about multiplication of the inverse Hessian with a vector because Newton's method for optimization demands it. In many applications, the straightforward inverse Hessian multiplication is not possible because of time and space constraints. A method linear to the size of the gradient function in both time and space is given which is very close to the Hessian-vector multiplication of \cite{pearlmutter1994}, with differential operator and all. However, I have failed to get it working on neural nets for a reason also given. I also have some strange speculative statements.
+You care about multiplication of the inverse Hessian with a vector because Newton's method for optimization demands it. In many applications, the straightforward inverse Hessian multiplication is not possible because of time and space constraints. A method linear to the size of the gradient function in both time and space is given which is very close to the Hessian-vector multiplication of \cite{pearlmutter1994}, with differential operator and all. However, I have failed to get it working on neural nets for a reason also given.}
 
 \section{Introduction}
 
@@ -220,19 +220,9 @@ $$ H^{-1}v_1 = B(W_1) = B(x^+) net_1 + x^+ B(net_1)$$
 
 At this point, one understands why Pearlmutter used a variant short notation.
 
-\section{Discussion / Strange Speculative Statements}
-
 It may be more worth the while to find a network architecture where the weight-to-gradient function is involutive, or at least less of a pain to invert in a way compatible with the differential operator. I have begun work on this. The situation reminds me of the situation with loopy BP.
 
-There are many heterodox views of neural networks, Werbos-Rumelhart-style backpropagation nets. I collect them, and have a few of my own. An important one to me is to think of them as sort of simulations of firms, which also transduce credit through functional layers. Another is to think of them as spins on a 1-lattice with weirdo boundary conditions, each \textit{layer} one \textit{spin} on that small 1-lattice. Note that this is different from strictly going on a Hopfield net view, because of the semantics of what the spin sites are and the boundary conditions.
-
-Second order phenomena are obviously of great interest to both heterodox views. I will present the view I have of how this impinges on them, but don't pretend to have any proof for the view.
-
-In the firm-simulation it seems to be a firm where each credit assignment update takes into account the other credit assignment updates which are made during the whole update. This amuses me greatly in that it takes the term "trust region" much more literally than imagined.
-
-In the view as 1-lattice with spins, the inverse Hessian futzes with the exponential gradient correlational structure (the vanishing or exponential gradient) which seems very reminiscent of the onset of the power law of correlations in various critical phenomena. The state of the art for making correlational structure (or rather, gradient flow) extensive is to my knowledge just LSTM's\cite{lstm}.
-
-You might, of course, just care about second-order methods for completely normal optimizational reasons.
+\section{Acknowledgements}
 
 Thanks to the CSPAM peeps, HG, JB, JH and SCM for letting me annoy them while writing this. Preemptive apologies to JLM and JB for doing weird things. Any mistakes are my fault.
 
