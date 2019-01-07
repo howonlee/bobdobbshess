@@ -1,4 +1,3 @@
 *.aux
-*.pdf
 *.log
 .mypy_cache/
